@@ -10,6 +10,8 @@ class Vector:
     @type components: list\n
     @param set_unit_vectors: A flag to calculate a unit vector object of the Vector\n
     @type set_unit_vectors: bool
+    return: A vector
+    rtype: Vector
     """
     self._components = components
     self._magnitude = self.calc_magnitude(components)
@@ -163,12 +165,30 @@ class Vector:
     """
     return sum([x * y for x, y in zip(a.components, b.components)])
 
+  @staticmethod
+  def collinear(a, b):
+    """
+    Calculates vectors that are either parallel to each other or are in the same line. It also 
+    detects if direction is either opposite or the same (given that they are collinear)
+    @param a: Vector A
+    type: Vector
+    @param b: Vector B
+    type: Vector
+    return: true if vectors are collinear
+    rtype: bool
+    """
+    result = Vector.dot(a, b) / (a.magnitude * b.magnitude)
+    if result == -1:
+      print("Collinear with opposite directions")
+    return 1.0 == abs(result)
 
+# Cross product, Gradients, Igualdades
 v = Vector([1,2,3])
-w = Vector([1,2,3])
-print(v.unit_vectors[0].components)
+w = Vector([-1,-2,-3])
+print(Vector.collinear(v, w))
 
-print(Vector.dot(w, v))
+#Vector.collinear(v,w) # True/False
+#print(Vector.dot(w, v))
 # v = Vector([1,2])
 # w = Vector([3,4])
 # Vector.dot(v,w)
