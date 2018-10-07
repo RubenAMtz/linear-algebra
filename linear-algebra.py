@@ -1,4 +1,5 @@
 import math
+import logging
 
 class Vector:
   # Constructor
