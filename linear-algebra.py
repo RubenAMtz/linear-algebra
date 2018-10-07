@@ -1,9 +1,10 @@
 import math
 import logging
+logging.basicConfig(level=logging.DEBUG)
 
 class Vector:
   # Constructor
-  def __init__(self, components, set_unit_vectors = True):
+  def __init__(self, components, set_unit_vectors = True, log = True):
     """
     Constructs a Vector object by passing the components of a "vector" in a list
 
@@ -19,6 +20,10 @@ class Vector:
     self._dim = self.calc_dim()
     if set_unit_vectors:
       self._unit_vectors = self.calc_unit_vectors()
+    if log:
+      logging.info('Created vector - %s', str(self.components))
+      
+      
   # Getters
   @property
   def unit_vectors(self):
@@ -63,7 +68,9 @@ class Vector:
     for x in range(self.dimensions):
       add = a[x] + b[x]
       result.append(add)
-    return Vector(result)
+    results = Vector(result, log=False)
+    logging.info('Addition of vectors - %s + %s = %s', str(self.components), str(vector.components), str(results.components))
+    return results
 
   def __sub__(self, vector): # = -(a,b)
     """
@@ -151,7 +158,7 @@ class Vector:
     for i in range(self.dimensions):
       unit_vector = [0] * self.dimensions
       unit_vector[i] = 1
-      result.append(Vector(unit_vector, set_unit_vectors=False))
+      result.append(Vector(unit_vector, set_unit_vectors=False, log=False))
     return result
 
   # Static methods
@@ -183,10 +190,13 @@ class Vector:
       print("Collinear with opposite directions")
     return 1.0 == abs(result)
 
+v = Vector([1, 2, 3])
+w = Vector([1, 1, 1])
+v + w
 # Cross product, Gradients, Igualdades
-v = Vector([1,2,3])
-w = Vector([-1,-2,-3])
-print(Vector.collinear(v, w))
+# v = Vector([1,2,3])
+# w = Vector([-1,-2,-3])
+# print(Vector.collinear(v, w))
 
 #Vector.collinear(v,w) # True/False
 #print(Vector.dot(w, v))
