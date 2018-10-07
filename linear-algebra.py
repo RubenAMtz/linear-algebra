@@ -1,6 +1,6 @@
 import math
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 class Vector:
   # Constructor
@@ -97,6 +97,32 @@ class Vector:
     logging.info('Addition of vectors - %s - %s = %s', str(self.components), str(vector.components), str(results.components))
     return results
 
+  def __mul__(self, other):
+    """
+    Multiplies a vector with a scalar
+    This multiply a vector with a numeric value and returns a vector with a different magnitud. 
+    The direction will be shifted if the scalar brings a negative sign.        
+    
+    @param other: a scalar\n
+    @type other: float or int\n
+    @return: Vector * scalar\n
+    @rtype: Vector
+    """
+    if type(other) == int or type(other) == float:
+      result = Vector([x * other for x in self.components], log = False)
+      logging.info("Scalar Multiplication - %s * %s = %s", str(self.components), str(other), str(result.components))
+      return result
+  
+  # rmul to prevent for order of factors in parameters
+  def __rmul__(self, other):
+    """
+    Same as method __mul__(self,other)
+    """    
+    if type(other) == int or type(other) == float:
+      result = Vector([x * other for x in self.components], log = False)
+      logging.info("Scalar Multiplication - %s * %s = %s", str(other), str(self.components), str(result.components))
+      return result
+
   def calc_dim(self):
     """
     Calculates the number of dimensions of the vector (number of elements)
@@ -119,43 +145,6 @@ class Vector:
     magnitude = math.sqrt(magnitude)
     return magnitude
 
-  def valid_dims(self, vector):
-    """
-    Compares the dimensions between Vector objects
-    
-    @param vector: A Vector object (to be compared with)
-    @type: Vector object
-    return: TRUE/FALSE
-    rtype: Bool        
-    """
-    return self.dimensions == vector.dimensions
-
-  def __mul__(self, other):
-    """
-    Multiplies a vector with a scalar
-    This multiply a vector with a numeric value and returns a vector with a different magnitud. 
-    The direction will be shifted if the scalar brings a negative sign.        
-    
-    @param other: a scalar\n
-    @type other: float or int\n
-    @return: Vector * scalar\n
-    @rtype: Vector
-    """
-    if type(other) == int or type(other) == float:
-      result = Vector([x * other for x in self.components], log = False)
-      logging.info("Scalar Multiplication - %s * %s = %s", str(self.components), str(other), str(result.components))
-      return result
-
-  #rmul to prevent for order of factors in parameters
-  def __rmul__(self, other):
-    """
-    Same as method __mul__(self,other)
-    """    
-    if type(other) == int or type(other) == float:
-      result = Vector([x * other for x in self.components], log = False)
-      logging.info("Scalar Multiplication - %s * %s = %s", str(other), str(self.components), str(result.components))
-      return result
-
   def calc_unit_vectors(self):
     """
     Calculates the unit vectors of the vector
@@ -170,6 +159,17 @@ class Vector:
       result.append(Vector(unit_vector, set_unit_vectors=False, log=False))
     return result
 
+  def valid_dims(self, vector):
+    """
+    Compares the dimensions between Vector objects
+    
+    @param vector: A Vector object (to be compared with)
+    @type: Vector object
+    return: TRUE/FALSE
+    rtype: Bool        
+    """
+    return self.dimensions == vector.dimensions
+
   # Static methods
   @staticmethod
   def dot(a, b):
@@ -180,7 +180,9 @@ class Vector:
     return: A scalar
     rtype: Float    
     """
-    return sum([x * y for x, y in zip(a.components, b.components)])
+    result = sum([x * y for x, y in zip(a.components, b.components)])
+    logging.info("Dot product - <%s, %s> = %s", str(a.components), str(b.components), str(result))
+    return result
 
   @staticmethod
   def collinear(a, b):
@@ -194,17 +196,28 @@ class Vector:
     return: true if vectors are collinear
     rtype: bool
     """
-    result = Vector.dot(a, b) / (a.magnitude * b.magnitude)
+    result = round(Vector.dot(a, b) / (a.magnitude * b.magnitude), 10)
     if result == -1:
-      print("Collinear with opposite directions")
-    return 1.0 == abs(result)
+      logging.warning("Collinear with opposite directions (180 deg)")
+    
+    results = round(1.0, 10) == abs(result)
+    if results:
+      logging.info("Collinearity - %s is colinear with %s", str(a.components), str(b.components))
+    else:
+      logging.info("Collinearity - %s is not colinear with %s", str(a.components), str(b.components))
+    return results
 
 v = Vector([1, 2, 3])
 w = Vector([1, 1, 1])
+x = Vector([2, 2, 2])
 v + w + v
 w - v
 v * 2
 2 * v
+Vector.dot(w, v)
+Vector.collinear(x, w)
+Vector.collinear(x, (-1) * w)
+Vector.collinear(v, w)
 #print(locals())
 
 # Cross product, Gradients, Igualdades
