@@ -20,6 +20,7 @@ class Vector:
     self._dim = self.calc_dim()
     if set_unit_vectors:
       self._unit_vectors = self.calc_unit_vectors()
+    # logging
     if log:
       logging.info('Created vector - %s', str(self.components))
       
@@ -68,6 +69,7 @@ class Vector:
     for x in range(self.dimensions):
       add = a[x] + b[x]
       result.append(add)
+    # logging
     results = Vector(result, log=False)
     logging.info('Addition of vectors - %s + %s = %s', str(self.components), str(vector.components), str(results.components))
     return results
@@ -90,7 +92,10 @@ class Vector:
     for x in range(self.dimensions):
       sub = a[x] - b[x]
       result.append(sub)
-    return Vector(result)
+    # logging
+    results = Vector(result, log = False)
+    logging.info('Addition of vectors - %s - %s = %s', str(self.components), str(vector.components), str(results.components))
+    return results
 
   def calc_dim(self):
     """
@@ -137,7 +142,9 @@ class Vector:
     @rtype: Vector
     """
     if type(other) == int or type(other) == float:
-      return Vector([x * other for x in self.components])
+      result = Vector([x * other for x in self.components], log = False)
+      logging.info("Scalar Multiplication - %s * %s = %s", str(self.components), str(other), str(result.components))
+      return result
 
   #rmul to prevent for order of factors in parameters
   def __rmul__(self, other):
@@ -145,7 +152,9 @@ class Vector:
     Same as method __mul__(self,other)
     """    
     if type(other) == int or type(other) == float:
-      return Vector([x * other for x in self.components])
+      result = Vector([x * other for x in self.components], log = False)
+      logging.info("Scalar Multiplication - %s * %s = %s", str(other), str(self.components), str(result.components))
+      return result
 
   def calc_unit_vectors(self):
     """
@@ -192,7 +201,12 @@ class Vector:
 
 v = Vector([1, 2, 3])
 w = Vector([1, 1, 1])
-v + w
+v + w + v
+w - v
+v * 2
+2 * v
+#print(locals())
+
 # Cross product, Gradients, Igualdades
 # v = Vector([1,2,3])
 # w = Vector([-1,-2,-3])
