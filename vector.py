@@ -24,7 +24,6 @@ class Vector:
     if log:
       logging.info('Created vector - %s', str(self.components))
       
-      
   # Getters
   @property
   def unit_vectors(self):
@@ -207,17 +206,17 @@ class Vector:
       logging.info("Collinearity - %s is not colinear with %s", str(a.components), str(b.components))
     return results
 
-v = Vector([1, 2, 3])
-w = Vector([1, 1, 1])
-x = Vector([2, 2, 2])
-v + w + v
-w - v
-v * 2
-2 * v
-Vector.dot(w, v)
-Vector.collinear(x, w)
-Vector.collinear(x, (-1) * w)
-Vector.collinear(v, w)
+# v = Vector([1, 2, 3])
+# w = Vector([1, 1, 1])
+# x = Vector([2, 2, 2])
+# v + w + v
+# w - v
+# v * 2
+# 2 * v
+# Vector.dot(w, v)
+# Vector.collinear(x, w)
+# Vector.collinear(x, (-1) * w)
+# Vector.collinear(v, w)
 #print(locals())
 
 # Cross product, Gradients, Igualdades
