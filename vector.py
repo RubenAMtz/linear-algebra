@@ -240,7 +240,7 @@ class Vector:
       sum = 360  
     
     if x == 0:
-      x = 0.0000001
+      x = 0.0000000001
     
     angle = math.atan(y / x) + math.radians(sum)
     if degrees:
@@ -249,27 +249,30 @@ class Vector:
 
   @staticmethod
   def cross_product(a, b):
-    # product of magnitud of vectors * sin(angle between them)
-    pass
-
+    if a.dimensions != 3 or b.dimensions != 3:
+      raise ValueError("Vectors must be in R³")    
+    ax, ay, az = a.components
+    bx, by, bz = b.components
+    return Vector([(ay*bz-az*by),-(ax*bz-az*bx),(ax*by-ay*bx)])
 
   def calc_unit_vector(self):
     return Vector([component/self.magnitude for component in self.components])
 
 def tryouts():
-  a = Vector([5, 3])
-  b = Vector([-2, 3.3333])
+  a = Vector([1, 0, 0])
+  b = Vector([2, 1, 3])
   d = Vector([6, -9.9999])
-  print(Vector.angle(a,b))
-  print(a)
-  print(Vector.polar_2d(b))
-  print(Vector.polar_2d(d))
-  print(a.calc_versors()[0])
-  print(a.calc_versors()[1])
-  unit_a = a.calc_unit_vector()
+  # print(Vector.angle(a,b))
+  # print(a)
+  # print(Vector.polar_2d(b))
+  # print(Vector.polar_2d(d))
+  # print(a.calc_versors()[0])
+  # print(a.calc_versors()[1])
+  # unit_a = a.calc_unit_vector()
   print(a.magnitude)
-  print(unit_a)
-  print(unit_a.magnitude)
-  print(Vector.collinear(b,d))
+  #print(unit_a)
+  #print(unit_a.magnitude)
+  print(Vector.collinear(b, a))
+  print(Vector.cross_product(a,b))
 
 tryouts()
