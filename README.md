@@ -14,6 +14,12 @@ git clone https://github.com/jsgilberto/linear-algebra
  - Magnitude  
  - Dimensions  
  - Versors (orthogonal unit vectors)
+
+### Class Matrix properties:
+
+ - Dimensions
+ - Elements
+ - Matrix
  
 ### Methods defined for Vector:
 
@@ -27,9 +33,13 @@ git clone https://github.com/jsgilberto/linear-algebra
  - Calculate polar form (for 2D vectors)
  - Calculate unit vector
  
+### Methods defined for Matrix:
+
+ - Create matrix
+
 ## To be implemented
  
  - Numerical errors are being fixed
- - Matrix definition
+ - Matrix definition using Vector class as an optional.
  - Matrix methods
  - Numerical methods (derivative for gradient, divergence, etc)
