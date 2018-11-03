@@ -275,4 +275,5 @@ def tryouts():
   print(Vector.collinear(b, a))
   print(Vector.cross_product(a,b))
 
-tryouts()
+if __name__ == "__main__":
+  tryouts()
