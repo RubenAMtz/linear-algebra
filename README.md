@@ -2,7 +2,9 @@
 # Work in Progress
 
 ## Install
-$git clone https://github.com/jsgilberto/linear-algebra
+```
+git clone https://github.com/jsgilberto/linear-algebra
+```
 
 ## So far:
 
