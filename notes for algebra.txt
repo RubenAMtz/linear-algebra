@@ -1,0 +1,45 @@
+Substraction between two points in a plane gives you a vector lying on
+the plane.
+
+The law of cosines supports the idea behind "orthogonality"
+given a triangle A, B and C (hipotenusa).
+
+C = A + B + 2ABCos(tetha)
+Remember: given the sides A, B and C we can say that, that is equals to:
+||A||, ||B|| and ||C||
+
+Thus: ||C|| = ||A|| + ||B|| + 2||A||||B|| Cos tetha
+and ||C|| = ||A-B||^2
+
+Given a plane equation Ax + By + Cz = D , you can obtain a normal vector
+to the plane by using its coefficients:
+normal_vector = Ai + Bj + Ck, D only defines a shift of that vector
+
+The distance from a point to a plane, given that the point is not on the
+plane is given by:
+
+(AXo + BYo + CZo - D) / sqrt(A^2 + B^2 + C^2)
+
+Where A, B, C and D are the coeffiecients of the plane equation
+and Xo, Yo and Zo are the coordinates of the point itself.
+
+The idea behind it, is that the shortest distance to the plane is 
+parallel to the normal vector to the plane.
+
+A system is called under determined when there are less equations than
+unknown variables, bringing you to a solution of the system with infinte
+solutions.
+
+A system is called over determined when there are more equations than
+uknown variables, bringing you to the solution of the system with no
+solutions, unless the system is non linearly independent (some of the
+equations are combination of others)
+
+
+Problems to solve
+Find region of interest (bar and disks)
+Find roi within the roi (disks)
+	Bars come with multiple stacked disks
+Find features (center and perimeter)
+Define ellipse equation
+Fit selected points to face of 3D model

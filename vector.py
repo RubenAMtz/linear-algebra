@@ -257,23 +257,3 @@ class Vector:
 
   def calc_unit_vector(self):
     return Vector([component/self.magnitude for component in self.components])
-
-def tryouts():
-  a = Vector([1, 0, 0])
-  b = Vector([2, 1, 3])
-  d = Vector([6, -9.9999])
-  # print(Vector.angle(a,b))
-  # print(a)
-  # print(Vector.polar_2d(b))
-  # print(Vector.polar_2d(d))
-  # print(a.calc_versors()[0])
-  # print(a.calc_versors()[1])
-  # unit_a = a.calc_unit_vector()
-  print(a.magnitude)
-  #print(unit_a)
-  #print(unit_a.magnitude)
-  print(Vector.collinear(b, a))
-  print(Vector.cross_product(a,b))
-
-if __name__ == "__main__":
-  tryouts()
