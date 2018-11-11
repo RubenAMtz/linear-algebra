@@ -7,6 +7,11 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 class Matrix:
     
     def __init__(self, elements, shape):
+        if type(shape) is not tuple:
+            raise TypeError("Shape must be a tuple")
+        if type(elements) is not list:
+            raise TypeError("Elements must be a list")
+        
         self._dimensions = shape
         self._elements = self.create(elements, shape)
         self._rows = shape[0]
@@ -54,10 +59,120 @@ class Matrix:
 
         shape = (self.dim[1], self.dim[0])
         return Matrix(elements, shape)
+
+    def __add__(self, other):
+        if (self._dimensions != other._dimensions):
+            raise ValueError("Dimension of matrices don't match")
+        added_matrix = []
+        for i, row in enumerate(self._elements):
+            for j, column in enumerate(row):
+                added_matrix.append(self._elements[i][j] + other._elements[i][j])
+        return Matrix(added_matrix, self._dimensions)
+
+    @staticmethod
+    def direct_sum(self, other):
+        """
+        The direct sum of matrices is a special type of block matrix, 
+        in particular the direct sum of square matrices is a block diagonal matrix.
+        """
+        elements = []
+        zeros_other_h = [0] * other.dim[1]
+        zeros_self_h = [0] * self.dim[1]                    
         
+        for row in range(self._rows):
+            elements += self.row(row) + zeros_other_h
+            
+        for row in range(other._rows):
+            elements += zeros_self_h + other.row(row)
+        
+        shape = (self.dim[0] + other.dim[0], self.dim[1] + other.dim[1])
+        return Matrix(elements, shape=shape)             
+                                            
+    def __sub__(self, other):
+        if (self._dimensions != other._dimensions):
+            raise ValueError("Dimension of matrices don't match")
+        added_matrix = []
+        for i, row in enumerate(self._elements):
+            for j, column in enumerate(row):
+                added_matrix.append(self._elements[i][j] - other._elements[i][j])
+        return Matrix(added_matrix, self._dimensions)
+
+    def gaussian_elimination(self):
+        """
+        This function applies gaussian elimination and pivoting to return a Upper triangular-shapped matrix
+        """
+        rows = self._rows
+        columns = self._columns
+
+        #rank(self) = A in row echelon form, it is the number of non-zero rows from the A in ref
+        """
+        rows = size(A,1);
+        columns = size(A,2);
+
+        if rank(A) < min(rows,columns)
+            flag = -1;
+            U = [];
+            y = [];
+            return
+        end
+        flag = 1;
+
+        if rows ~= columns
+            return
+        end
+
+        for j=1:(columns-1)
+            for i=(j+1):rows
+                P= zeros(rows);
+                if A(j,j) < tol
+                    greatest = max(A(:,j));
+                    index = max(find(A(:,j)==greatest));
+                    P(j,index) = 1; %elemnt to be switched down
+                    P(index,j) = 1; %element to be swtiched up
+                    for z=1:rows
+                        if 0 == max(P(z,:))
+                            P(z,z) = 1; 
+                        end
+                    end
+                    A = P*A;
+                end
+                L= eye(rows);
+                L(i,j) = -A(i,j)/A(j,j);
+                A = L*A;
+                b = L*b;
+            end
+        end
+        U = A;
+        y = b;
+        """
+    @staticmethod
+    def matmul(a, b):
+        """
+        Returns matrix multiplication
+        """
+        # keep testing for this condition:
+        if a._columns is not b._rows:
+            #(m x n) (p x q)
+            raise ValueError("Matrix dimensions must match")
+
+        
+    def row_echelon_form(self):
+        """
+        This method applies the Gauss-Jordan algorithm to get a matrix in its row echelon form
+        """
+        rows = self._rows
+        columns = self._columns
+        for i in range(rows):
+            for j in range(columns):
+                pass
+    #      1          2           3
+    # [0, 0, 1]   [0, 0, 0]   [1, 0.5, 0]   [1 , 0.5, 0] 
+    # [0, 2, 3] = [0, 0, 0] = [0,   2, 3] = [-4,  0, 3] 
+    # [2, 1, 0]   [0, 0, 0]   [0,   0, 1]   [0 ,  0, 1]
+
     def __str__(self):
-        matrix_form = "["
+        matrix_form = ""
         for row in range(self._rows):
             matrix_form += str(self.row(row)) + "\n"
-        matrix_form += "]"
+        matrix_form += ""
         return matrix_form

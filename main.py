@@ -17,17 +17,18 @@ def tryouts():
     #print(unit_a.magnitude)
     print(Vector.collinear(b, a))
     print(Vector.cross_product(a,b))
-    elements = [1, 2, 3, 4, 5, 6, 7, 8]
-    shape = [2, 4]
+    elements = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    shape = (3, 3)
     a = Matrix(elements, shape)
-    print(a._elements)
-    print(a._elements[1][2])
-    aT = a.transpose()
-    print(aT)
     elements = [3, 4, 5, 6, 7, 8, 9, 10, 11]
     b = Matrix(elements,(3,3))
-    print(b)
-    print(b.transpose())
+    elements = [1, -2, -3, -4, -5, -6, -7, -8]
+    shape = (2,4)
+    c = Matrix(elements, shape)
+    #print(a + c)
+    #print(a - c)
+    print(Matrix.direct_sum(b, a))
+    Matrix.matmul(a, b)
 
 if __name__ == "__main__":
     tryouts()
