@@ -28,7 +28,14 @@ def tryouts():
     #print(a + c)
     #print(a - c)
     print(Matrix.direct_sum(b, a))
-    Matrix.matmul(a, b)
-
+    print(a)
+    print(b)
+    print(Matrix.matmul(a, b))
+    P = Matrix.permutation_matrix(a, [1,2,0])
+    print(a)
+    print(Matrix.matmul(P, a))
+    P = Matrix.permutation_matrix_2(a, from_=0, to_=1)
+    print(a)
+    print(Matrix.matmul(P, a))
 if __name__ == "__main__":
     tryouts()

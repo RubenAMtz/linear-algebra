@@ -154,7 +154,15 @@ class Matrix:
         if a._columns is not b._rows:
             #(m x n) (p x q)
             raise ValueError("Matrix dimensions must match")
+        elements = []
+        for i in range(a._rows):
+            row_a = vector.Vector(a.row(i))
+            for j in range(b._columns):
+                col_b = vector.Vector(b.col(j))
+                elements.append(vector.Vector.dot(row_a, col_b))
 
+        shape = (a._rows, b._columns)
+        return Matrix(elements, shape=shape)
         
     def row_echelon_form(self):
         """
@@ -165,10 +173,30 @@ class Matrix:
         for i in range(rows):
             for j in range(columns):
                 pass
-    #      1          2           3
-    # [0, 0, 1]   [0, 0, 0]   [1, 0.5, 0]   [1 , 0.5, 0] 
-    # [0, 2, 3] = [0, 0, 0] = [0,   2, 3] = [-4,  0, 3] 
-    # [2, 1, 0]   [0, 0, 0]   [0,   0, 1]   [0 ,  0, 1]
+
+
+    @staticmethod
+    def permutation_matrix(matrix, indices):
+        result = []
+        for element in indices:
+            zeros = [0] * matrix._columns
+            zeros[element] = 1
+            result += zeros
+        return Matrix(result, shape=matrix.dim)
+
+    @staticmethod
+    def permutation_matrix_2(matrix, from_=0, to_=1):
+        result = []
+        for row in range(matrix._rows):
+            zeros = [0] * matrix._columns
+            if row == from_:
+                zeros[to_] = 1
+            elif row == to_:
+                zeros[from_] = 1
+            else:
+                zeros[row] = 1                                    
+            result += zeros
+        return Matrix(result, shape=matrix.dim)
 
     def __str__(self):
         matrix_form = ""
